@@ -78,6 +78,18 @@ ka.tabGroup = new Class({
             wrapper.setStyle( 'display', 'inline' );
             _this.rerender();
         }
+        
+        wrapper.startTip = function( pText ){
+            if( !this.toolTip )
+                this.toolTip = new ka.tooltip( wrapper, pText );
+            this.toolTip.setText( pText );
+            this.toolTip.show();
+        }
+
+        wrapper.stopTip = function( pText ){
+        	if( this.toolTip )
+        		this.toolTip.stop( pText );
+        }
 
         wrapper.setPressed = function( pPressed ){
             if( pPressed ){
