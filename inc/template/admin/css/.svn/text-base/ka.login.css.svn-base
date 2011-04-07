@@ -1,0 +1,189 @@
+.ka-login {
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+    background-image: url(../images/login-bg.jpg);
+    background-repeat: repeat-x;
+    background-color: #00273c;
+    text-align: center;
+    z-index: 20000000; /*20mil*/
+}
+
+.ka-login-icon {
+    font-size: 19px;
+    font-weight: bold;
+    position: absolute;
+    left: 25px;
+    top: 14px;
+    color: #333;
+    line-height: 36px;
+}
+
+.ka-login-middleBg {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 437px;
+    height: 185px;
+    background-image: url(../images/login-box-bg.png);
+}
+
+.ka-login-middle {
+    font-family: Verdana, sans;
+    margin: auto;
+    width: 437px;
+    height: 185px;
+    margin-top: 235px;
+/*    border: 13px solid white;*/
+    text-align: left;
+    position: relative;
+/*    background-image: url(../images/login-middle-bg.jpg);
+    background-repeat: no-repeat;*/
+}
+
+.ka-ai-loader-con {
+    height: 30px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    left: 25px;
+    right: 29px;
+    bottom: 68px;
+    position: absolute;
+    border: 1px solid #c7c7c7;
+    background-color: #f8f8f8;
+}
+
+.ka-ai-loader-txt {
+    height: 4px;
+    bottom: 88px;
+    right: 0px;
+    width: 100%;
+    text-align: center;
+    position: absolute;
+}
+
+.ka-login-middle-logo {
+    position: absolute;
+    right: -13px;
+    display: none;
+    top: -180px;
+}
+
+.ka-login-middle-form {
+    position: absolute;
+    left: 9px;
+    top: 65px;
+    width: 413px;
+    height: 100px;
+}
+
+.ka-login-middle-form .label {
+    font-size: 11px;
+    letter-spacing: 1px;
+    font-weight: bold;
+    position: absolute;
+    top: 0px;
+    left: 15px;
+    color: #555;
+}
+
+.ka-login-middle-form .label-pw {
+    left: 220px;
+}
+
+.ka-login-middle-form .entries {
+    float: left;
+    width: 220px;
+    padding: 0px;
+}
+
+.ka-login-input-passwd,
+.ka-login-input-username {
+    position: absolute;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    border: 1px solid #dadada;
+    padding: 5px;
+    width: 170px;
+}
+
+.ka-login-input-passwd {
+    top: 21px;
+    left: 220px;
+}
+
+.ka-login-input-username {
+    top: 21px;
+    left: 15px;
+}
+
+.ka-login-middle .loginMessage {
+    position: absolute;
+    bottom: 5px;
+    left: 25px;
+    height: 25px;
+    text-align: right;
+    font-weight: bold;
+    line-height: 15px;
+    font-size: 11px;
+    font-family: Verdana, Sans;
+}
+
+.ka-login-middle-form .loginLangSelection {
+    position: absolute;
+    right: 12px;
+    top: 62px;
+    width: 120px;
+    padding: 3px 2px 2px 2px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+}
+
+.ka-login-middle-form a.ka-Button,
+.ka-login-middle-form a.ka-Button:link {
+    padding: 0px 15px 1px 20px;
+    position: absolute;
+    left: 12px;
+    font-weight: bold;
+    top: 62px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.ka-login-middle-form .entries input {
+    width: 260px;
+    padding-left: 5px;
+    border: 0px;
+    height: 16px;
+    font-size: 11px;
+    line-height: 16px;
+    margin-top: 12px;
+    margin-bottom: 12px;
+    color: #444;
+    border: 1px solid #888;
+    padding: 2px;
+    padding-top: 4px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+    background-color: #f6f6f6;
+    outline: none;
+/*    -moz-border-radius: 4px;
+    background-image: url(../images/input-login-bg.jpg);*/
+}
+
+
+/* load backend */
+.ka-ai-loader {
+    position: absolute;
+    bottom: 0px;
+    height: 30px;
+    left: 0px;
+    background-color: #888;
+    z-index: 131313124;
+}

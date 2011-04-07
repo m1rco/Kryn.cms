@@ -1,0 +1,34 @@
+10
+
+dir
+1249
+svn+ssh://kryn.org/srv/svn/kryn.cms-1.0/inc/template/search
+svn+ssh://kryn.org/srv/svn
+
+
+
+2011-03-18T20:48:30.318992Z
+1190
+marc
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+cc53e7ed-c518-4200-9e35-95c7dbdf7747
+
+form
+dir
+
+results
+dir
+

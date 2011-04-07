@@ -1,0 +1,52 @@
+.ka-Table-head, 
+.ka-Table-body {
+    width: 100%;
+}
+
+.ka-Table-head th {
+    border-left:1px solid #DDDDDD;
+    cursor:default;
+    font-weight:normal;
+    padding:0px 3px;
+    color: #555;
+    border-bottom: 1px solid silver;
+    height:21px;
+}
+
+.ka-Table-head {
+    background-color: #e5e5e5;
+}
+
+.ka-Table-head-container {
+    position: absolute;
+    height: 21px;
+    top: 0px;
+    left: 0px;
+    right: 16px;
+}
+
+.ka-Table-body tr td {
+    padding: 3px;
+}
+
+.ka-Table-body tr.one td {
+    background-color: #f4f4f4;
+}
+
+.ka-Table-body tr.two td {
+    background-color: #e8e8e8;
+}
+
+.ka-Table-body tr:hover td,
+.ka-Table-body tr.one:hover td,
+.ka-Table-body tr.two:hover td {
+    background-color: #ccc;
+}
+
+.ka-Table-body tr.ka-filepane-file-detail-active td,
+.ka-Table-body tr.active td,
+.ka-Table-body tr.active:hover td,
+.ka-Table-body tr.ka-filepane-file-detail-active:hover td {
+    background-color: #aaa;	
+}
+

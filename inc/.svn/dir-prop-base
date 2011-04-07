@@ -1,0 +1,16 @@
+K 10
+svn:ignore
+V 53
+config.php
+
+kryn.log
+
+compile
+
+cache
+
+upload
+
+tcache
+
+END

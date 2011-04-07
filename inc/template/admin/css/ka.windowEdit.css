@@ -1,0 +1,46 @@
+.ka-windowEdit-form {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 31px;
+    overflow: auto;
+}
+
+.ka-windowEdit-form .ka-field-layoutelement-layoutcontent {
+    position: absolute;
+    top: 70px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    overflow: auto;
+    background-color: #f5f5f5;
+    border-top: 1px solid #ddd;
+}
+
+
+.ka-windowEdit-form .tinyMceExternalToolbarParent {
+    width: 100%;
+    top: 0px;
+}
+
+.ka-windowEdit-form .tinyMceExternalToolbarParent .mceExternalToolbar > table {
+	width: 100%;
+}
+
+.ka-windowEdit-actions {
+    text-align: right;
+    padding-right: 5px;
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    height: 30px;
+    bottom: 0px;
+    border-top: 1px solid gray;
+    line-height: 28px;
+    background-color: #aaa;
+}
+
+.ka-windowEdit-actions a {
+    margin-left: 5px;
+}

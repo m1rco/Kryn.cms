@@ -1,0 +1,11 @@
+Installation
+
+1. Download the zip or tarsal
+2. Extract to docroot of local or remote webserver
+3. Open the /install.php
+4. Go through the installation process
+
+
+If you wanna using PDO database connector, you should make sure that you've
+activated the PDO libraries in the php.ini
+

@@ -1,0 +1,1298 @@
+{
+  "version": "0.9.0",
+  "owner": "1",
+  "title": {
+    "en": "Kryn.cms",
+    "de": "Kryn.cms"
+  },
+  "desc": {
+    "en": "Kryn.cms",
+    "de": "Kryn.cms"
+  },
+  "system": true,
+  "widgetsLayout": "<div id='full'><\/div><div style='float: left; width: 49%;' id='left'><\/div><div style='float: right; width: 49%;' id='right'><\/div><div style='clear: both;'><\/div>",
+  "widgets": {
+    "unpublishedContents": {
+      "title": "Unpublished contents",
+      "type": "autotable",
+      "position": "full",
+      "columns": [
+        [
+          "ID",
+          30
+        ],
+        [
+          "User",
+          80
+        ],
+        [
+          "Page",
+          null,
+          "html"
+        ],
+        [
+          "Date",
+          90,
+          "timestamp",
+          "d M H:i:s"
+        ]
+      ],
+      "category": "overview",
+      "manipulate_row": "manipulateUnpublishedContentsRow",
+      "sql": "SELECT MAX(v.rsn) as versionrsn, u.username, p.rsn, MAX(v.modified) as modified, p.domain_rsn FROM %pfx%system_user u, %pfx%system_pages p, %pfx%system_pagesversions v WHERE draft_exist = 1 AND v.page_rsn = p.rsn AND u.rsn = v.owner_rsn AND ( p.type = 0 OR p.type = 3) GROUP BY p.rsn, u.username, p.domain_rsn ORDER BY MAX(v.modified) DESC"
+    },
+    "lastPageChanges": {
+      "title": "Last page changes",
+      "type": "autotable",
+      "position": "full",
+      "columns": [
+        [
+          "ID",
+          30
+        ],
+        [
+          "User",
+          80
+        ],
+        [
+          "Page",
+          null,
+          "html"
+        ],
+        [
+          "Date",
+          90,
+          "timestamp",
+          "d M H:i:s"
+        ]
+      ],
+      "category": "overview",
+      "withoutCountInTitle": true,
+      "manipulate_row": "manipulateLastChangesRow",
+      "sql": "SELECT v.rsn, u.username, v.page_rsn, v.modified, p.domain_rsn FROM  %pfx%system_pagesversions v, %pfx%system_user u, %pfx%system_pages p WHERE v.page_rsn = p.rsn AND u.rsn = v.owner_rsn ORDER BY v.created DESC LIMIT 25"
+    },
+    "searchStats": {
+      "title": "Top search words with results",
+      "type": "autotable",
+      "position": "left",
+      "columns": [
+        [
+          "Word",
+          80
+        ],
+        [
+          "Searched x times",
+          30
+        ]
+      ],
+      "category": "statistic",
+      "withoutCountInTitle": true,
+      "sql": "SELECT word, searchcount FROM %pfx%system_search_stats WHERE found = 1 ORDER BY searchcount DESC, word"
+    },
+    "searchStatsNoResult": {
+      "title": "Top search words without results",
+      "type": "autotable",
+      "position": "right",
+      "columns": [
+        [
+          "Word",
+          80
+        ],
+        [
+          "Searched x times",
+          30
+        ]
+      ],
+      "category": "statistic",
+      "withoutCountInTitle": true,
+      "sql": "SELECT word, searchcount FROM  %pfx%system_search_stats WHERE found = 0 ORDER BY searchcount DESC, word"
+    }
+  },
+  "admin": {
+    "system": {
+      "title": "System (Butterfly)",
+      "type": "custom",
+      "fixedWidth": 250,
+      "fixedHeight": 275,
+      "multi": false,
+      "noMaximize": true,
+      "childs": {
+        "desktopSettings": {
+          "isLink": false,
+          "title": "Desktop settings",
+          "fixedWidth": 580,
+          "fixedHeight": 400,
+          "multi": false,
+          "noMaximize": true,
+          "type": "custom"
+        },
+        "searchIndexerList": {
+          "title": "Search index",
+          "isLink": false,
+          "defaultWidth": 700,
+          "type": "list",
+          "class": "adminSearchIndexList",
+          "childs": {
+            "doAction": {
+              "title": "add",
+              "type": "custom",
+              "class": "adminSearchIndexer"
+            }
+          }
+        },
+        "layout": {
+          "title": "Layouts",
+          "type": "custom",
+          "multi": false,
+          "defaultWidth": 900,
+          "defaultHeight": 400,
+          "icon": "admin\/images\/admin-layout-icon.png"
+        },
+        "languages": {
+          "title": "Languages",
+          "type": "custom",
+          "multi": false,
+          "defaultWidth": 380,
+          "defaultHeight": 430
+        },
+        "tools": {
+          "title": "Tools",
+          "hasSubmenu": 1,
+          "childs": {
+            "database": {
+              "title": "Database",
+              "type": "custom",
+              "defaultWidth": 380,
+              "multi": false,
+              "defaultHeight": 430
+            },
+            "logs": {
+              "title": "Logs",
+              "type": "custom",
+              "multi": false,
+              "defaultWidth": 800,
+              "defaultHeight": 430
+            }
+          }
+        },
+        "module": {
+          "title": "Extensionmanager",
+          "type": "custom",
+          "defaultWidth": 750,
+          "minWidth": 750,
+          "defaultHeight": 500,
+          "multi": false,
+          "childs": {
+            "update": {
+              "title": "Update extension",
+              "type": "list",
+              "class": "moduleAdminList",
+              "multi": false
+            },
+            "new": {
+              "title": "Install extension",
+              "type": "list",
+              "class": "moduleAdminInstallList",
+              "multi": false,
+              "defaultWidth": 400
+            },
+            "dbInit": {
+              "title": "Database Update\/Init",
+              "type": "custom",
+              "defaultWidth": 300
+            },
+            "publish": {
+              "title": "Publish",
+              "type": "custom",
+              "defaultWidth": 300
+            },
+            "edit": {
+              "title": "Edit extension",
+              "type": "custom",
+              "defaultWidth": 650,
+              "minWidth": 650,
+              "defaultHeight": 500
+            },
+            "add": {
+              "title": "Create extension",
+              "type": "custom",
+              "defaultWidth": 300,
+              "defaultHeight": 300
+            },
+            "view": {
+              "title": "Extension",
+              "type": "custom",
+              "defaultWidth": 400,
+              "defaultHeight": 400,
+              "noMaximize": true
+            }
+          }
+        },
+        "settings": {
+          "title": "Settings",
+          "type": "custom",
+          "multi": false,
+          "defaultWidth": 400,
+          "defaultHeight": 480
+        }
+      }
+    },
+    "backend": {
+      "title": "Backend access",
+      "isLink": false,
+      "acl": false,
+      "childs": {
+        "tinyDialog": {
+          "title": "Dialog",
+          "isLink": false,
+          "defaultWidth": 500,
+          "defaultHeight": 470,
+          "type": "custom"
+        }
+      }
+    },
+    "overview": {
+      "title": "Dashboard",
+      "type": "custom",
+      "defaultWidth": 950,
+      "icon": "admin\/images\/extras-icon.png"
+    },
+    "pages": {
+      "title": "Pages",
+      "type": "custom",
+      "defaultWidth": 1000,
+      "defaultHeight": 510,
+      "minWidth": 710,
+      "icon": "admin\/images\/admin-pages-icon.png",
+      "includeChilds": true,
+      "childs": {
+        "addDialog": {
+          "title": "Add pages",
+          "isLink": false,
+          "acl": false,
+          "defaultWidth": 720,
+          "defaultHeight": 500,
+          "type": "custom"
+        },
+        "addDomains": {
+          "title": "Add domains",
+          "isLink": false,
+          "defaultWidth": 710,
+          "defaultHeight": 500,
+          "type": "custom"
+        },
+        "chooser": {
+          "title": "Chooser",
+          "isLink": false,
+          "acl": false,
+          "defaultWidth": 560,
+          "minWidth": 560,
+          "defaultHeight": 400,
+          "type": "custom"
+        },
+        "bigEditor": {
+          "title": "WYSIWYG-Editor",
+          "isLink": false,
+          "acl": false,
+          "defaultWidth": 500,
+          "defaultHeight": 300,
+          "type": "custom"
+        }
+      }
+    },
+    "files": {
+      "title": "Files",
+      "type": "custom",
+      "defaultWidth": 800,
+      "defaultHeight": 400,
+      "icon": "admin\/images\/admin-files-icon.png",
+      "childs": {
+        "edit": {
+          "title": "File edit",
+          "isLink": false,
+          "defaultWidth": 680,
+          "defaultHeight": 420,
+          "type": "custom"
+        },
+        "properties": {
+          "title": "Properties",
+          "isLink": false,
+          "defaultWidth": 350,
+          "minWidth": 350,
+          "minHeight": 450,
+          "defaultHeight": 500,
+          "noMaximize": true,
+          "type": "custom"
+        }
+      }
+    },
+    "help": {
+      "title": "Help",
+      "type": "custom",
+      "defaultWidth": 600,
+      "defaultHeight": 400,
+      "isLink": false,
+      "multi": false
+    }
+  },
+  "db": {
+    "system_workspaces": {
+      "rsn": [
+        "int",
+        "",
+        "DB_PRIMARY",
+        true
+      ],
+      "name": [
+        "varchar",
+        "255",
+        "-",
+        false
+      ]
+    },
+    "system_pages": {
+      "rsn": [
+        "int",
+        "",
+        "DB_PRIMARY",
+        true
+      ],
+      "prsn": [
+        "int",
+        "",
+        "DB_INDEX",
+        false
+      ],
+      "domain_rsn": [
+        "int",
+        "",
+        "DB_INDEX",
+        false
+      ],
+      "type": [
+        "int",
+        "",
+        "DB_INDEX",
+        false
+      ],
+      "title": [
+        "varchar",
+        "255",
+        "-",
+        false
+      ],
+      "page_title": [
+        "varchar",
+        "255",
+        "-",
+        false
+      ],
+      "url": [
+        "varchar",
+        "255",
+        "-",
+        false
+      ],
+      "link": [
+        "varchar",
+        "255",
+        "-",
+        false
+      ],
+      "template": [
+        "varchar",
+        "64",
+        "-",
+        false
+      ],
+      "layout": [
+        "varchar",
+        "64",
+        "-",
+        false
+      ],
+      "lang": [
+        "varchar",
+        "64",
+        "DB_INDEX",
+        false
+      ],
+      "sort": [
+        "int",
+        "",
+        "-",
+        false
+      ],
+      "sort_mode": [
+        "varchar",
+        "8",
+        "-",
+        false
+      ],
+      "target": [
+        "varchar",
+        "64",
+        "-",
+        false
+      ],
+      "visible": [
+        "int",
+        "1",
+        "DB_INDEX",
+        false
+      ],
+      "access_denied": [
+        "enum",
+        "'0','1'",
+        "DB_INDEX",
+        false
+      ],
+      "meta": [
+        "text",
+        "",
+        "-",
+        false
+      ],
+      "properties": [
+        "text",
+        "",
+        "-",
+        false
+      ],
+      "cdate": [
+        "int",
+        "",
+        "-",
+        false
+      ],
+      "mdate": [
+        "int",
+        "",
+        "-",
+        false
+      ],
+      "draft_exist": [
+        "int",
+        "1",
+        "DB_INDEX",
+        false
+      ],
+      "force_https": [
+        "int",
+        "1",
+        "-",
+        false
+      ],
+      "access_from": [
+        "int",
+        "",
+        "-",
+        false
+      ],
+      "access_to": [
+        "int",
+        "",
+        "-",
+        false
+      ],
+      "access_redirectto": [
+        "int",
+        "",
+        "-",
+        false
+      ],
+      "access_nohidenavi": [
+        "int",
+        "1",
+        "-",
+        false
+      ],
+      "access_need_via": [
+        "int",
+        "",
+        "-",
+        false
+      ],
+      "access_from_groups": [
+        "varchar",
+        "32",
+        "-",
+        false
+      ],
+      "cache": [
+        "int",
+        "1",
+        "DB_INDEX",
+        false
+      ],
+      "search_words": [
+        "text",
+        "",
+        "-",
+        false
+      ],
+      "unsearchable": [
+        "int",
+        "",
+        "-",
+        false
+      ]
+    },
+    "system_pagesversions": {
+      "rsn": [
+        "int",
+        "",
+        "DB_PRIMARY",
+        true
+      ],
+      "page_rsn": [
+        "int",
+        "",
+        "DB_INDEX",
+        false
+      ],
+      "owner_rsn": [
+        "int",
+        "",
+        "-",
+        false
+      ],
+      "created": [
+        "int",
+        "",
+        "-",
+        false
+      ],
+      "modified": [
+        "int",
+        "",
+        "-",
+        false
+      ],
+      "active": [
+        "int",
+        "",
+        "DB_INDEX",
+        false
+      ]
+    },
+    "system_settings": {
+      "name": [
+        "varchar",
+        "255",
+        "DB_PRIMARY",
+        false
+      ],
+      "value": [
+        "varchar",
+        "255",
+        "-",
+        false
+      ]
+    },
+    "system_page_notices": {
+      "rsn": [
+        "int",
+        "",
+        "DB_PRIMARY",
+        true
+      ],
+      "page_rsn": [
+        "int",
+        "",
+        "DB_INDEX",
+        false
+      ],
+      "user_rsn": [
+        "int",
+        "",
+        "DB_INDEX",
+        false
+      ],
+      "content": [
+        "text",
+        "",
+        "-",
+        false
+      ],
+      "created": [
+        "int",
+        "",
+        "-",
+        false
+      ]
+    },
+    "system_modules": {
+      "name": [
+        "varchar",
+        "255",
+        "DB_PRIMARY",
+        false
+      ],
+      "activated": [
+        "int",
+        "1",
+        "DB_INDEX",
+        false
+      ]
+    },
+    "system_domains": {
+      "rsn": [
+        "int",
+        "",
+        "DB_PRIMARY",
+        true
+      ],
+      "domain": [
+        "varchar",
+        "255",
+        "DB_INDEX",
+        false
+      ],
+      "title_format": [
+        "varchar",
+        "255",
+        "-",
+        false
+      ],
+      "lang": [
+        "varchar",
+        "128",
+        "DB_INDEX",
+        false
+      ],
+      "startpage_rsn": [
+        "int",
+        "",
+        "DB_INDEX",
+        false
+      ],
+      "alias": [
+        "varchar",
+        "255",
+        "-",
+        false
+      ],
+      "redirect": [
+        "varchar",
+        "255",
+        "-",
+        false
+      ],
+      "page404_rsn": [
+        "int",
+        "",
+        "-",
+        false
+      ],
+      "page404interface": [
+        "varchar",
+        "128",
+        "-",
+        false
+      ],
+      "master": [
+        "int",
+        "1",
+        "DB_INDEX",
+        false
+      ],
+      "resourcecompression": [
+        "int",
+        "1",
+        "DB_INDEX",
+        false
+      ],
+      "layouts": [
+        "text",
+        "",
+        "-",
+        false
+      ],
+      "phplocale": [
+        "varchar",
+        "128",
+        "-",
+        false
+      ],
+      "path": [
+        "varchar",
+        "64",
+        "-",
+        false
+      ],
+      "publicproperties": [
+        "text",
+        "",
+        "-",
+        false
+      ],
+      "extproperties": [
+        "text",
+        "",
+        "-",
+        false
+      ],
+      "email": [
+        "varchar",
+        "64",
+        "-",
+        false
+      ],
+      "search_index_key": [
+        "varchar",
+        "255",
+        "-",
+        false
+      ],
+      "robots": [
+        "text",
+        "",
+        "-",
+        false
+      ],
+      "favicon": [
+        "varchar",
+        "255",
+        "-",
+        false
+      ]
+    },
+    "system_contents": {
+      "rsn": [
+        "int",
+        "",
+        "DB_PRIMARY",
+        true
+      ],
+      "page_rsn": [
+        "int",
+        "",
+        "DB_INDEX",
+        false
+      ],
+      "version_rsn": [
+        "int",
+        "",
+        "DB_INDEX",
+        false
+      ],
+      "title": [
+        "varchar",
+        "255",
+        "-",
+        false
+      ],
+      "content": [
+        "text",
+        "",
+        "DB_FULLTEXT",
+        false
+      ],
+      "template": [
+        "varchar",
+        "64",
+        "-",
+        false
+      ],
+      "type": [
+        "varchar",
+        "64",
+        "-",
+        false
+      ],
+      "mdate": [
+        "int",
+        "",
+        "-",
+        false
+      ],
+      "cdate": [
+        "int",
+        "",
+        "-",
+        false
+      ],
+      "hide": [
+        "int",
+        "1",
+        "DB_INDEX",
+        false
+      ],
+      "sort": [
+        "int",
+        "",
+        "-",
+        false
+      ],
+      "box_id": [
+        "int",
+        "",
+        "DB_INDEX",
+        false
+      ],
+      "owner_rsn": [
+        "int",
+        "",
+        "DB_INDEX",
+        false
+      ],
+      "access_from": [
+        "int",
+        "",
+        "-",
+        false
+      ],
+      "access_to": [
+        "int",
+        "",
+        "-",
+        false
+      ],
+      "access_from_groups": [
+        "varchar",
+        "32",
+        "-",
+        false
+      ],
+      "unsearchable": [
+        "int",
+        "",
+        "-",
+        false
+      ]
+    },
+    "system_messages": {
+      "rsn": [
+        "int",
+        "",
+        "DB_PRIMARY",
+        true
+      ],
+      "user_rsn": [
+        "int",
+        "",
+        "DB_INDEX",
+        false
+      ],
+      "type": [
+        "int",
+        "",
+        "DB_INDEX",
+        false
+      ],
+      "to_rsn": [
+        "int",
+        "",
+        "DB_INDEX",
+        false
+      ],
+      "time": [
+        "int",
+        "",
+        "-",
+        false
+      ],
+      "viewed": [
+        "int",
+        "",
+        "-",
+        false
+      ],
+      "content": [
+        "text",
+        "",
+        "-",
+        false
+      ]
+    },
+    "system_langs": {
+      "rsn": [
+        "int",
+        "",
+        "DB_PRIMARY",
+        true
+      ],
+      "code": [
+        "varchar",
+        "3",
+        "DB_INDEX",
+        false
+      ],
+      "title": [
+        "varchar",
+        "255",
+        "-",
+        false
+      ],
+      "langtitle": [
+        "varchar",
+        "255",
+        "-",
+        false
+      ],
+      "userdefined": [
+        "int",
+        "1",
+        "DB_INDEX",
+        false
+      ],
+      "visible": [
+        "int",
+        "1",
+        "DB_INDEX",
+        false
+      ]
+    },
+    "system_log": {
+      "rsn": [
+        "int",
+        "",
+        "DB_PRIMARY",
+        true
+      ],
+      "date": [
+        "int",
+        "",
+        "-",
+        false
+      ],
+      "username": [
+        "varchar",
+        "64",
+        "-",
+        false
+      ],
+      "ip": [
+        "varchar",
+        "32",
+        "-",
+        false
+      ],
+      "code": [
+        "varchar",
+        "32",
+        "DB_INDEX",
+        false
+      ],
+      "message": [
+        "text",
+        "",
+        "-",
+        false
+      ]
+    },
+    "system_files_log": {
+      "rsn": [
+        "int",
+        "",
+        "DB_PRIMARY",
+        true
+      ],
+      "path": [
+        "varchar",
+        "255",
+        "DB_INDEX",
+        false
+      ],
+      "modified": [
+        "int",
+        "",
+        "-",
+        false
+      ],
+      "created": [
+        "int",
+        "",
+        "-",
+        false
+      ],
+      "type": [
+        "int",
+        "2",
+        "-",
+        false
+      ],
+      "content": [
+        "text",
+        "",
+        "-",
+        false
+      ]
+    },
+    "system_search": {
+      "url": [
+        "varchar",
+        "255",
+        "DB_PRIMARY",
+        false
+      ],
+      "title": [
+        "varchar",
+        "255",
+        "-",
+        false
+      ],
+      "md5": [
+        "varchar",
+        "255",
+        "-",
+        false
+      ],
+      "mdate": [
+        "int",
+        "",
+        "-",
+        false
+      ],
+      "blacklist": [
+        "int",
+        "",
+        "-",
+        false
+      ],
+      "page_rsn": [
+        "int",
+        "",
+        "-",
+        false
+      ],
+      "domain_rsn": [
+        "int",
+        "",
+        "DB_PRIMARY",
+        false
+      ],
+      "page_content": [
+        "text",
+        "",
+        "-",
+        false
+      ]
+    },
+    "system_search_blacklist": {
+      "url": [
+        "varchar",
+        "255",
+        "DB_PRIMARY",
+        false
+      ],
+      "domain_rsn": [
+        "int",
+        "",
+        "DB_PRIMARY",
+        false
+      ]
+    },
+    "system_search_stats": {
+      "word": [
+        "varchar",
+        "255",
+        "DB_PRIMARY",
+        false
+      ],
+      "searchcount": [
+        "int",
+        "",
+        "DB_INDEX",
+        false
+      ],
+      "found": [
+        "int",
+        "",
+        "DB_PRIMARY",
+        false
+      ]
+    },
+    "system_urlalias": {
+      "rsn": [
+        "int",
+        "",
+        "DB_PRIMARY",
+        true
+      ],
+      "url": [
+        "varchar",
+        "255",
+        "DB_INDEX",
+        false
+      ],
+      "to_page_rsn": [
+        "int",
+        "",
+        "-",
+        false
+      ],
+      "domain_rsn": [
+        "int",
+        "",
+        "DB_INDEX",
+        false
+      ]
+    },
+    "system_files_versions": {
+      "rsn": [
+        "int",
+        "",
+        "DB_PRIMARY",
+        true
+      ],
+      "path": [
+        "varchar",
+        "255",
+        "DB_INDEX",
+        false
+      ],
+      "created": [
+        "int",
+        "",
+        "-",
+        false
+      ],
+      "mtime": [
+        "int",
+        "",
+        "-",
+        false
+      ],
+      "user_rsn": [
+        "int",
+        "",
+        "-",
+        false
+      ],
+      "versionpath": [
+        "varchar",
+        "255",
+        "-",
+        false
+      ]
+    },
+    "system_frameworkversion": {
+      "rsn": [
+        "int",
+        "",
+        "DB_PRIMARY",
+        true
+      ],
+      "code": [
+        "varchar",
+        "128",
+        "DB_INDEX",
+        false
+      ],
+      "content": [
+        "text",
+        "",
+        "-",
+        false
+      ],
+      "version": [
+        "int",
+        "",
+        "-",
+        false
+      ],
+      "cdate": [
+        "int",
+        "",
+        "-",
+        false
+      ],
+      "user_rsn": [
+        "int",
+        "",
+        "-",
+        false
+      ]
+    }
+  },
+  "adminJavascript": [
+    "admin\/js\/ka.Table.js",
+    "admin\/js\/ka.Base.js",
+    "admin\/js\/ka.layoutElement.js",
+    "admin\/js\/ka.buttonGroup.js",
+    "admin\/js\/ka.field.js",
+    "admin\/js\/ka.field.multiUpload.js",
+    "admin\/js\/ka.field.layoutElement.js",
+    "admin\/js\/ka.fieldProperty.js",
+    "admin\/js\/ka.helpsystem.js",
+    "admin\/js\/ka.fp.js",
+    "admin\/js\/ka.kwindow.js",
+    "admin\/js\/ka.widget.js",
+    "admin\/js\/ka.list.js",
+    "admin\/js\/ka.overview.js",
+    "admin\/js\/ka.pagesTree.js",
+    "admin\/js\/ka.windowEdit.js",
+    "admin\/js\/ka.windowAdd.js",
+    "admin\/js\/ka.wm.js",
+    "admin\/js\/overview.js",
+    "admin\/js\/ka.dialog.js",
+    "admin\/js\/ka.fb.js",
+    "admin\/js\/ka.fileDialog.js",
+    "admin\/js\/ka.layoutBox.js",
+    "admin\/js\/ka.layoutContent.js",
+    "admin\/js\/ka.contentBox.js",
+    "admin\/js\/ka.desktop.js",
+    "admin\/js\/ka.pluginChooser.js",
+    "admin\/js\/ka.datePicker.js",
+    "admin\/js\/ka.buttonGroup.js",
+    "admin\/js\/ka.buttonBar.js",
+    "admin\/js\/ka.tabGroup.js",
+    "admin\/js\/ka.tabPane.js",
+    "admin\/js\/ka.smallTabGroup.js",
+    "admin\/js\/ka.filesPane.js",
+    "admin\/js\/ka.loader.js",
+    "admin\/js\/ka.tooltip.js",
+    "admin\/js\/ka.AutoTable.js",
+    "admin\/js\/ka.Accordion.js",
+    "admin\/js\/ka.imageGroup.js",
+    "admin\/js\/ka.customField.js",
+    "admin\/js\/swfupload.js",
+    "admin\/js\/swfupload.queue.js",
+    "admin\/js\/fuploader.js",
+    "admin\/js\/ka.crawler.js",
+    "admin\/mootools-extras\/Array.sortOn.js"
+  ],
+  "adminCss": [
+    "admin\/css\/style.css",
+    "admin\/css\/ka.Table.css",
+    "admin\/css\/ka.ai.css",
+    "admin\/css\/ka.field.css",
+    "admin\/css\/ka.fieldProperty.css",
+    "admin\/css\/ka.helpsystem.css",
+    "admin\/css\/ka.fp.css",
+    "admin\/css\/ka.kwindow.css",
+    "admin\/css\/ka.widget.css",
+    "admin\/css\/ka.list.css",
+    "admin\/css\/ka.pagesTree.css",
+    "admin\/css\/ka.windowEdit.css",
+    "admin\/css\/ka.wm.css",
+    "admin\/css\/ka.dialog.css",
+    "admin\/css\/ka.desktop.css",
+    "admin\/css\/ka.fb.css",
+    "admin\/css\/ka.pluginChooser.css",
+    "admin\/css\/ka.datePicker.css",
+    "admin\/css\/ka.buttonGroup.css",
+    "admin\/css\/ka.tooltip.css",
+    "admin\/css\/ka.buttonBar.css",
+    "admin\/css\/ka.tabGroup.css",
+    "admin\/css\/ka.tabPane.css",
+    "admin\/css\/ka.smallTabGroup.css",
+    "admin\/css\/ka.filesPane.css",
+    "admin\/css\/ka.AutoTable.css",
+    "admin\/css\/ka.Accordion.css",
+    "admin\/css\/ka.imageGroup.css",
+    "admin\/css\/ka.layoutBox.css",
+    "admin\/css\/ka.layoutContent.css",
+    "admin\/css\/overview.css"
+  ],
+  "community": "1",
+  "writableFiles": "",
+  "category": "8",
+  "tags": {
+    "de": "",
+    "en": ""
+  },
+  "depends": ""
+}

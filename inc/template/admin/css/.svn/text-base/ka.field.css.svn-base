@@ -1,0 +1,142 @@
+.ka-field-main {
+    padding: 3px 5px 3px 5px;
+}
+
+
+tr.ka-field-main td {
+    border-bottom: 1px dotted #ddd;
+    vertical-align: top;
+}
+
+.ka-field-tdtitle {
+    padding-top: 4px;
+    padding-left: 2px;
+    color: #333;
+}
+
+.ka-field-main-small {
+    width: 210px;
+    float: left;
+    padding: 5px;
+}
+
+h2.ka-field-headline {
+    font-size: 12px;
+    margin: 2px;   
+}
+
+.ka-field-main-small .ka-field-title div.desc {
+    width: 200px;
+}
+
+.ka-field-main-small .ka-field-title div.title {
+    width: 187px;
+}
+
+.ka-field-main-small .ka-field-field input.text,
+.ka-field-main-small .ka-field-field textarea {
+    width: 175px;
+}
+
+.ka-field-main-small .ka-field-field select {
+    width: 179px;
+}
+
+.ka-field-title {
+   
+}
+
+div.ka-field-main div.desc {
+    padding: 3px 0px 0px 20px;
+    max-width: 325px;
+    color: #999;
+}
+
+tr.ka-field-main td div.desc {
+    padding-left: 2px;
+}
+
+.ka-field-title div.title {
+    border-bottom: 1px solid #ddd;
+    padding: 1px 1px 1px 10px;
+    width: 312px;
+}
+
+.ka-field-main .ka-field-field {
+    margin: 5px 2px 2px 20px;
+    position: relative;
+}
+
+.ka-field-field select,
+.ka-field-field textarea,
+.ka-field-field input.text {
+    width: 296px;
+}
+
+select,
+textarea,
+input.text {
+    border: 1px solid silver;
+    padding: 2px;
+    color: #444;
+    font-size: 11px;
+    -moz-border-radius: 4px;
+    background-color: #f7f7f7;
+}
+
+input.text {
+    width: 150px;	
+}
+
+.ka-field-field select {
+    width: 304px;
+}
+
+.ka-field-field img.emptyIcon {
+    position: absolute;
+    top: 1px;
+    left: -20px;
+    margin-left: 2px;
+}
+
+
+input.ka-field-dateTime {
+    padding-left: 18px;
+    background-image: url(../images/icons/calendar.png);
+    background-repeat: no-repeat;
+}
+
+.ka-field-main-small input.text.multiUpload-firstInput {
+	width: 120px;
+}
+
+
+.kwindow-win-buttonWrapper.multiUpload-uploadBtnDiv {
+	height: 14px;
+    margin-top: 5px;
+	margin-left: 3px;
+}
+
+.multiUpload-fileName {
+	border-bottom: 1px solid #DDDDDD;
+	font-weight: bold;
+	padding: 15px 0px 8px 16px;
+}
+
+.multiUpload-fileContainer {
+	margin-bottom: 15px;
+}
+
+
+.multiUpload-delBtn {
+	padding-left: 5px;
+}
+
+
+
+.ka-field-layoutelement-tinytoolbar {
+    position: absolute;
+    top: 0px;
+    height: 60px;
+    left: 260px;
+}

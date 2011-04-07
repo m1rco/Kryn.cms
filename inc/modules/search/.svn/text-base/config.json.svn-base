@@ -1,0 +1,53 @@
+{
+  "version": "0.0.5",
+  "owner": "1",
+  "community": "1",
+  "category": "8",
+  "title": {
+    "en": "Search engine",
+    "de": "Suche"
+  },
+  "desc": {
+    "en": "Frontend plugin for the integrated kryn core search.",
+    "de": "Liefert die frontend Plugins, um die integriete Suchengine zu nutzen."
+  },
+  "writableFiles": "inc\/template\/search\/*",
+  "plugins": {
+    "searchForm": [
+      "Search form",
+      {
+        "template": {
+          "label": "Template",
+          "type": "files",
+          "withoutExtension": true,
+          "directory": "inc\/template\/search\/form\/"
+        },
+        "page": {
+          "label": "Result page",
+          "type": "page"
+        }
+      }
+    ],
+    "doSearch": [
+      "Search result",
+      {
+        "template": {
+          "label": "Template",
+          "type": "files",
+          "withoutExtension": true,
+          "directory": "inc\/template\/search\/results\/"
+        }, 
+		"truncateChars": {
+		  "label": "Truncate result text",
+		  "desc" : "after n characters. Leave it blank if you do not want the text to be truncated.",
+          "type": "int"
+		  
+		}
+      }
+    ]
+  },
+  "tags": {
+    "de": "suche,suchmaschine",
+    "en": "search,searchengine"
+  }
+}

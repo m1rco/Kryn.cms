@@ -1,0 +1,52 @@
+10
+
+dir
+1249
+svn+ssh://kryn.org/srv/svn/kryn.cms-1.0/inc
+svn+ssh://kryn.org/srv/svn
+
+
+
+2011-03-23T16:59:39.765272Z
+1245
+mirco
+has-props
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+cc53e7ed-c518-4200-9e35-95c7dbdf7747
+
+codemirror
+dir
+
+fileversions
+dir
+
+kryn
+dir
+
+modules
+dir
+
+pear
+dir
+
+smarty
+dir
+
+template
+dir
+
+tinymce
+dir
+

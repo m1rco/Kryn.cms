@@ -1,0 +1,293 @@
+.admin-files-actionBar {
+    height: 31px;
+}
+
+.admin-files-actionBar-addressPos {
+    position: absolute;
+    left: 406px;
+    top: 0px;
+    right: 135px;
+    -moz-border-radius: 7px;
+    -webkit-border-radius: 7px;
+    border-radius: 7px;
+    border: 1px solid #888;
+    border-top: 1px solid #666;
+    padding-right: 8px;
+}
+
+.admin-files-actionBar-address {
+    width: 100%;
+    height: 13px;
+    padding: 3px;
+    padding-top: 2px;
+    font-size: 11px;
+    color: #444;
+    -moz-border-radius: 7px;
+    -webkit-border-radius: 7px;
+    border-radius: 7px;
+    border: 1px solid #ccc;
+    background-color: #eae9eb;
+}
+
+.admin-files-actionBar-searchPos {
+    position: absolute;
+    right: 15px;
+    width: 80px;
+    top: 0px;
+    -moz-border-radius: 7px;
+    -webkit-border-radius: 7px;
+    border-radius: 7px;
+    border: 1px solid #888;
+    border-top: 1px solid #666;
+    padding-right: 23px;
+}
+
+.admin-files-actionBar-search {
+    background-image: url(../images/admin-files-search-bg.png);
+    background-repeat: no-repeat;
+    background-color: #eae9eb;
+    background-position: 5px 0px;
+    width: 100%;
+    height: 13px;
+    padding: 3px;
+    padding-top: 2px;
+    padding-left: 19px;
+    font-size: 11px;
+    color: gray;
+    -moz-border-radius: 7px;
+    -webkit-border-radius: 7px;
+    border-radius: 7px;
+    border: 1px solid #ccc;
+}
+
+
+/* files */
+
+.admin-files-fileContainer {
+    background-color: white;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    left: 141px;
+    bottom: 0px;
+    overflow: auto;
+}
+
+.admin-files-infos {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+    width: 140px;
+    background-color: #f4f4f4;
+    overflow: auto;
+    border-right: 1px solid #ddd;
+}
+
+.admin-files-infos a {
+    display: block;
+    margin-left: 7px;
+    padding: 3px 6px 3px 22px;
+    color: #333;
+    cursor: default;
+    background-image: url(../images/ext/dir-mini.png);
+    background-position: 3px 4px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+}
+
+.admin-files-infos a:hover {
+    background-color: #656465;
+    color: white;
+}
+
+.admin-files-infos > div {
+    margin-top: 4px;
+    margin-bottom: 2px;
+    font-weight: bold;
+    padding-left: 3px;
+    color: gray;
+    
+}
+
+.admin-files-uploadPane {
+    position: absolute;
+    top: 52px;
+    right: 30px;
+    left: 30px;
+    height: 150px;
+    background-color: white;
+    border: 1px solid silver;
+}
+
+.admin-files-seperator {
+    clear: left;
+    border-bottom: 1px solid #eee;
+    margin: 4px 5px 4px 5px;
+    padding-left: 5px;
+    font-weight: bold;
+}
+
+/* context */
+.admin-files-context {
+    width: 145px;
+    border: 1px solid #ccc;
+    border-right: 1px solid #aaa;
+    border-bottom: 1px solid #aaa;
+    padding: 1px;
+    position: absolute;
+    z-index: 150000;
+    box-shadow: 0px 0px 1px #ccc;
+    -moz-border-radius: 5px;
+    box-shadow:1px 1px 2px #CCCCCC;
+    -moz-box-shadow:1px 1px 2px #CCCCCC;
+    background-color: #f0f0f0;
+}
+
+.admin-files-context a,
+.admin-files-context a:link {
+    text-decoration: none;
+    display: block;
+    padding: 3px 10px 3px 20px;
+    margin: 1px 0px 1px 0px;
+    cursor: default;
+    color: #333;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+}
+
+.admin-files-context a.delimiter {
+    border-top: 1px solid gray;
+}
+
+.admin-files-context a:hover {
+    background-color: #656465;
+    color: white;
+}
+
+.admin-files-context a.notactive:hover {
+    background-color: transparent;
+    color: silver;
+}
+
+.admin-files-context a.notactive {
+    color: silver;
+}
+
+/* files items */
+.admin-files-fileContainer .item {
+    float: left;
+    width: 75px;
+    height: 50px;
+    background-image: url(../images/ext/tpl.png);
+    background-position: center center;
+    background-repeat: no-repeat;
+    margin: 0px 10px 24px 10px;
+    position: relative;
+    text-align: center;
+    cursor: default;
+}
+
+.admin-files-fileContainer .admin-files-render-miniatur:hover div,
+.admin-files-fileContainer .item:hover span {
+    background-color: #eee;
+}
+
+.admin-files-fileContainer .item span {
+    position: relative;
+    bottom: -45px;
+    color: #444;
+    padding: 0px 4px 0px 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    cursor: default;
+    white-space: pre;
+}
+
+.admin-files-fileContainer .itemActive:hover span,
+.admin-files-fileContainer .itemActive span {
+    background-color: gray;
+    color: white;
+}
+
+.admin-files-fileContainer tr.detailActive td {
+    background-color: #aaa;
+}
+
+.admin-files-fileContainer tr td {
+    cursor: default;
+}
+
+.admin-files-fileContainer .dir {
+    background-image: url(../images/ext/dir.png);
+}
+.admin-files-fileContainer .file {
+    background-image: url(../images/ext/tpl.png);
+}
+.admin-files-fileContainer .image {
+    background-image: url(../images/ext/image.png);
+}
+.admin-files-fileContainer .css {
+    background-image: url(../images/ext/css.png);
+}
+
+.admin-files-fileContainer .js {
+    background-image: url(../images/ext/js.png);
+}
+.admin-files-fileContainer .html,
+.admin-files-fileContainer .htm,
+.admin-files-fileContainer .tpl {
+    background-image: url(../images/ext/html.png);
+}
+
+.admin-files-fileContainer .dir_bin {
+    background-image: url(../images/ext/dir_bin.png);
+}
+
+
+
+/* listType: miniatur */
+.admin-files-render-miniatur {
+    width: 120px;
+    border: 1px solid silver;
+    height: 70px;
+    background-color: #eee;
+    float: left;
+    margin: 10px;
+    margin-bottom: 25px;
+    position: relative;
+    background-position: center center;
+    background-repeat: no-repeat;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.admin-files-render-miniaturActive {
+    border: 1px solid gray;
+    background-color: #ddd;
+}
+
+.admin-files-render-miniaturActive .admin-files-render-miniatur-name {
+    background-color: #666;
+    color: white;
+}
+
+.admin-files-render-miniatur-name {
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    position: absolute;
+    top: 75px;
+    left: 0px;
+    right: 0px;
+    line-height: 15px;
+    font-size: 11px;
+    text-align: center;
+    padding: 0px 2px 0px 2px;
+}

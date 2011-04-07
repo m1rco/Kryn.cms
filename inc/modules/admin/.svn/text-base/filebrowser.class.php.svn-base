@@ -1,0 +1,19 @@
+<?php
+
+class filebrowser {
+
+    function init(){
+        switch( getArgv(3) ){
+        case 'getPages':
+            return filebrowser::getPages( getArgv('domain_rsn')+0 );
+        }
+    }
+
+    function getPages( $pDomain ){
+        $pages = dbExfetch( "SELECT * FROM %pfx%system_pages WHERE domain_rsn = $pDomain ORDER BY prsn, `sort` ASC", DB_FETCH_ALL );
+        json( $pages );
+    }
+
+}
+
+?>
