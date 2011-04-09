@@ -1365,7 +1365,7 @@ ka.destroyLinkContext = function(){
 ka.linkClick = function( pLink ){
     var mlink = pLink.retrieve('link');
     
-    if( ['iframe', 'list', 'custom', 'add'].indexOf(mlink.type) != -1 ){
+    if( ['iframe', 'list', 'custom', 'add', 'edit'].indexOf(mlink.type) != -1 ){
 
     	var link = ka._links[mlink.module +'/'+ mlink.code];
     	

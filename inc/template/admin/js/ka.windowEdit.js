@@ -21,9 +21,11 @@ ka.windowEdit = new Class({
         if( pVersion )
         	req.version = pVersion;
 
-        this.values.primary.each(function(prim){
-            req.include( 'primary:'+prim, _this.win.params.values[prim] );
-        });
+        if( _this.win.params ){
+            this.values.primary.each(function(prim){
+                req.include( 'primary:'+prim, _this.win.params.values[prim] );
+            });
+        }
 
         this.loader.show();
         new Request.JSON({url: _path+'admin/backend/window/loadClass/getItem', noCache: true, onComplete: function(res){
@@ -144,7 +146,8 @@ ka.windowEdit = new Class({
                 }).inject( this.languageSelect );
             }.bind(this));
             
-            this.languageSelect.value = this.win.params.lang;
+            if( this.win.params )
+                this.languageSelect.value = this.win.params.lang;
             
             versioningSelectRight = 170;
         }
