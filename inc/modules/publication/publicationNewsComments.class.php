@@ -58,9 +58,10 @@ class publicationNewsComments extends windowList {
         
         // Get parent rsn's
         $sql = "
-            SELECT DISTINCT parent_rsn
+            SELECT parent_rsn
             FROM %pfx%publication_comments
             WHERE rsn IN (".substr($rsns, 2).")
+            GROUP BY parent_rsn
         ";
         $res = dbExfetch($sql, -1);
         
