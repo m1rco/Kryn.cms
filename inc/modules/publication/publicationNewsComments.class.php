@@ -48,36 +48,36 @@ class publicationNewsComments extends windowList {
     
     function removeSelected()
     {
-    	// Get selected items
-		$selection = json_decode(getArgv('selected'), 1);
-		
-		// Make a rsn chain
-		$rsns = "";
-		foreach($selection as $selected)
-			$rsns .= ", ".$selected['rsn'];
-		
-		// Get parent rsn's
-		$sql = "
-			SELECT DISTINCT parent_rsn
-			FROM %pfx%publication_comments
-			WHERE rsn IN (".substr($rsns, 2).")
-		";
-		$res = dbExfetch($sql, -1);
-		
-		// Remove selected
-		parent::removeSelected();
-		
-		if($res === false)
-			return true; // TODO: [Ferdi] Something went wrong, but should we be concerned?
-		
-		// Update each parent
-		foreach($res as $parent)
-		{
-			$prsn = $parent['parent_rsn'];
-			$comments = dbExfetch("SELECT COUNT(*) as commCount FROM %pfx%publication_comments WHERE parent_rsn=$prsn", 1);
-			dbUpdate('publication_news', array('rsn' => $prsn), array('commentscount' => $comments['commCount'])); 
-		}
-		
-		return true;
+        // Get selected items
+        $selection = json_decode(getArgv('selected'), 1);
+        
+        // Make a rsn chain
+        $rsns = "";
+        foreach($selection as $selected)
+            $rsns .= ", ".$selected['rsn'];
+        
+        // Get parent rsn's
+        $sql = "
+            SELECT DISTINCT parent_rsn
+            FROM %pfx%publication_comments
+            WHERE rsn IN (".substr($rsns, 2).")
+        ";
+        $res = dbExfetch($sql, -1);
+        
+        // Remove selected
+        parent::removeSelected();
+        
+        if($res === false)
+            return true; // TODO: [Ferdi] Something went wrong, but should we be concerned?
+        
+        // Update each parent
+        foreach($res as $parent)
+        {
+            $prsn = $parent['parent_rsn'];
+            $comments = dbExfetch("SELECT COUNT(*) as commCount FROM %pfx%publication_comments WHERE parent_rsn=$prsn", 1);
+            dbUpdate('publication_news', array('rsn' => $prsn), array('commentscount' => $comments['commCount'])); 
+        }
+        
+        return true;
     }
 }
