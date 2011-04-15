@@ -120,12 +120,6 @@ class publicationNews {
     
 
     public static function itemList( $pConf ){
-        if($pConf['enableRss'] && getArgv('publication_rss') && getArgv('publication_rss') == 1) {
-            $pConf['template'] = $pConf['rssTemplate'];
-            $this->rssList($pConf);
-            return;
-        }
-        
         $categories = implode($pConf['category_rsn'], ",");
         
         if( $categories != "" )

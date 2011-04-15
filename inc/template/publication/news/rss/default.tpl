@@ -11,6 +11,7 @@
     <docs>http://{$smarty.server.SERVER_NAME}/{$page.realUrl}</docs>
     <generator>Kryn CMS</generator> 
     
+{if $hasItems}
 {foreach from=$items item=item} 
     <item>
         <title>{$item.title}</title>
@@ -20,6 +21,7 @@
         <guid>http://{$smarty.server.SERVER_NAME}/{$pConf.detailPage|realUrl}/{$item.title|escape:"rewrite"}/{$item.rsn}/</guid>
     </item>   
 {/foreach}
+{/if}
 
 </channel>
 </rss>
