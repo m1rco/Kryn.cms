@@ -70,7 +70,7 @@ class publication extends baseModule {
         // Create category where clause
         $whereCategories = "";
         if(count($categoryRsn))
-            $whereCategories = "AND n.category_rsn IN (".implode($categoryRsn, ",").") ";
+            $whereCategories = "AND n.category_rsn IN (".implode(",", $categoryRsn).") ";
         
         // Set items per page to default when not set
         if($itemsPerPage < 1)
