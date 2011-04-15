@@ -21,7 +21,7 @@ class publicationNews
             // Create category where clause
             $whereCategories = "";
             if(count($categoryRsn))
-                $whereCategories = "AND category_rsn IN (".implode(",", $categoryRsn).")";
+                $whereCategories = "AND n.category_rsn IN (".implode(",", $categoryRsn).")";
             
             // Create query
             $now = time();
@@ -38,7 +38,7 @@ class publicationNews
                     AND n.deactivate = 0
                     AND c.rsn = n.category_rsn
                     AND n.rsn = $rsn
-                    AND (n.releaseAt = 0 OR n.releaseAt < $now)
+                    AND (n.releaseAt = 0 OR n.releaseAt <= $now)
             ";
             
             $news = dbExfetch($sql, 1);
@@ -88,7 +88,7 @@ class publicationNews
                         
                     // From which comment page are we looking?
                     $page = getArgv('e3')+0;
-                    if($page == 0)
+                    if(!$page)
                         $page = 1;
                     
                     // Default max pages if not set
@@ -134,7 +134,7 @@ class publicationNews
                 {
                     $oldContents = kryn::$contents;
                     kryn::$contents = $json['contents'];
-                    $news['contents'] = tFetch($json['template']);
+                    $news['content'] = tFetch($json['template']);
                     kryn::$contents = $oldContents;
                 }
                 
@@ -168,76 +168,105 @@ class publicationNews
     } 
     
 
-    public static function itemList( $pConf ){
-        $categories = implode($pConf['category_rsn'], ",");
+    public static function itemList( $pConf )
+    {
+        // Get important variables from config
+        $categoryRsn = $pConf['category_rsn'];
+        $itemsPerPage = $pConf['itemsPerPage']+0;
+        $maxPages = $pConf['maxPages']+0;
+        $order = $pConf['order'];
+        $orderDirection = $pConf['orderDirection'];
+        $template = $pConf['template'];
         
-        if( $categories != "" )
-            $where = " category_rsn IN ($categories) AND ";
+        // Create category where clause
+        $whereCategories = "";
+        if(count($categoryRsn))
+            $whereCategories = "AND category_rsn IN (".implode(",", $categoryRsn).")";
+        if(getArgv('publication_filter')+0)
+            $whereCategories = "AND category_rsn = ".(getArgv('publication_filter')+0);
         
+        // Get current page
         $page = getArgv('e1')+0;
-        $page = ($page==0)?1:$page;
-
-
-        if( $pConf['itemsPerPage'] == "" )
-            $pConf['itemsPerPage'] = 5;
-        
-        
-        if( $page == 1 )
-            $start = 0;
-        else
-            $start = ($pConf['itemsPerPage'] * $page) - $pConf['itemsPerPage'];
-
-        if( getArgv('publication_filter') ){
-            $filter = " AND category_rsn = ".(getArgv('publication_filter')+0);
-        }
-
-        
-        if( $pConf['order'] ){
-            $order = $pConf['order'].' '.$pConf['orderDirection'];
-        } else {
-            $order = "releaseDate DESC";
-        }
-        
-        $sql = "SELECT n.*, c.title as categoryTitle FROM %pfx%publication_news n, %pfx%publication_news_category c WHERE
-            $where deactivate = 0 and category_rsn = c.rsn
-            $filter
-            ORDER BY $order LIMIT ".$pConf['itemsPerPage']." OFFSET $start  ";
-
-        $sqlCount = "SELECT count(*) as newscount
-            FROM %pfx%publication_news n, %pfx%publication_news_category c WHERE
-            $where deactivate = 0 and category_rsn = c.rsn
-            $filter
-            ";
-        $countRow = dbExfetch( $sqlCount, 1 );
-
-        $count = $countRow['newscount'];
-        tAssign( 'count', $count );
-        $pages = 1;
-        if( $count > 0 && $pConf['itemsPerPage'] > 0 )
-            $pages = ceil($count/ $pConf['itemsPerPage'] );
-
-        if( $pConf['maxPages']+0 == 0 )
-            $pConf['maxPages'] = $pages;
-
-        tAssign( 'pages', $pages );
-        tAssign( 'currentNewsPage', $page );
-
-        $list = dbExFetch($sql, DB_FETCH_ALL);
-        
-        foreach( $list as &$news ){
+        if(!$page)
+            $page = 1;
             
-            $json = json_decode( $news['content'], true );
-            if( $json && $json['contents'] && file_exists('inc/template/'.$json['template']) ){
-                
+        // If items per page is not set, make it default value
+        if(!$itemsPerPage)
+            $itemsPerPage = 5;
+            
+        // Set start of lookup
+        $start = $itemsPerPage * $page - $itemsPerPage;
+        
+        // Create order by
+        $orderBy = "releaseDate DESC";
+        if($order)
+            $orderBy = "$order $orderDirection";
+        
+        // Create query
+        $now = time();
+        $sql = "
+            SELECT
+                n.*,
+                c.title as categoryTitle
+            FROM
+                %pfx%publication_news n,
+                %pfx%publication_news_category c
+            WHERE
+                1=1
+                $whereCategories
+                AND n.deactivate = 0
+                AND c.rsn = n.category_rsn
+                AND (n.releaseAt = 0 OR n.releaseAt <= $now)
+            ORDER BY $orderBy
+            LIMIT $start, $itemsPerPage
+        ";
+        $list = dbExfetch($sql, -1);
+        
+        // Create count query
+        $sqlCount = "
+            SELECT
+                count(*) as newsCount
+            FROM
+                %pfx%publication_news n
+            WHERE
+                1=1
+                $whereCategories
+                AND deactivate = 0
+                AND (n.releaseAt = 0 OR n.releaseAt <= $now)
+        ";
+        $countRow = dbExfetch($sqlCount, 1);
+        $count = $countRow['newsCount'];
+        tAssign('count', $count);
+        
+        // Set pages
+        $pages = 1;
+        if($count && $itemsPerPage)
+            $pages = ceil($count / $itemsPerPage);
+            
+        if(!$maxPages)
+            $pConf['maxPages'] = $pages;
+            
+        // Assign pages to template
+        tAssign('pages', $pages);
+        tAssign('currentNewsPage', $page);
+        
+        // Process news items
+        foreach($list as &$news)
+        {
+            // Retrieve content of news
+            $json = json_decode($news['content'], true);
+            if($json && $json['contents'] && file_exists('inc/template/'.$json['template']))
+            {
                 $oldContents = kryn::$contents;
                 kryn::$contents = $json['contents'];
                 $news['content'] = tFetch($json['template']);
                 kryn::$contents = $oldContents;
             }
             
-            $json = json_decode( $news['intro'], true );
-            if( $json && $json['contents'] && file_exists('inc/template/'.$json['template']) ){
-                
+            // Retrieve intro of news
+            $json = json_decode($news['intro'], true);
+            if($json && $json['contents'] && file_exists('inc/template/'.$json['template']))
+            {
                 $oldContents = kryn::$contents;
                 kryn::$contents = $json['contents'];
                 $news['intro'] = tFetch($json['template']);
@@ -245,12 +274,14 @@ class publicationNews
             }
         }
         
+        // Assign list to template
         tAssign('items', $list);
-
+        
+        // Assign config and load template
         tAssign('pConf', $pConf);
-        kryn::addCss( 'publication/news/css/list/'.$pConf['template'].'.css' );
-        kryn::addJs( 'publication/news/js/list/'.$pConf['template'].'.js' );
-        return tFetch('publication/news/list/'.$pConf['template'].'.tpl');
+        kryn::addCss("publication/news/css/list/$template.css");
+        kryn::addJs("publication/news/js/list/$template.js");
+        return tFetch("publication/news/list/$template.tpl");
     }
 
 }
