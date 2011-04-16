@@ -1,26 +1,26 @@
 <?php
 
-class publication extends baseModule {
-    
-
-
+class publication extends baseModule 
+{
     public static function newsDetailFixed( $pConf ){
-        
         $_REQUEST['e2'] = $pConf['news_rsn'];
-        require_once( 'inc/modules/publication/publicationNews.class.php');
+        require_once('inc/modules/publication/publicationNews.class.php');
         return publicationNews::itemDetail( $pConf );
     }
     
-    public function newsList( $pConf ){
-        require_once( 'inc/modules/publication/publicationNews.class.php');
+    public static function newsList( $pConf ){
+        // Check if RSS is requested
+        if($pConf['enableRss'] && getArgv('publication_rss')+0 == 1)
+            self::rssList($pConf); // rssList calls die(), no return needed
+        
+        require_once('inc/modules/publication/publicationNews.class.php');
         return publicationNews::itemList( $pConf );
     }
 
-    public function newsDetail( $pConf ){
+    public static function newsDetail( $pConf ){
         require_once( 'inc/modules/publication/publicationNews.class.php');
         return publicationNews::itemDetail( $pConf );
     }
-
 
     public function categoryList( $pConf ){
                 
@@ -56,46 +56,10 @@ class publication extends baseModule {
     }
     
     
-    public function rssList( $pConf ){
-        $categories = implode($pConf['category_rsn'], ",");
-        if(!$pConf['itemsPerPage'] || $pConf['itemsPerPage']+0 < 1)
-            $pConf['itemsPerPage'] = 10;
-        
-
-        $sql = "SELECT n.*, c.title as categoryTitle FROM %pfx%publication_news n, %pfx%publication_news_category c WHERE
-            category_rsn IN ($categories) and deactivate = 0 and category_rsn = c.rsn
-            ORDER BY releaseDate DESC LIMIT ".$pConf['itemsPerPage'];           
-
-        
-        $list = dbExFetch($sql, DB_FETCH_ALL);
-        if($list) {
-            foreach($list as $key=> $value) {
-                $list[$key]['title'] = strip_tags(html_entity_decode($list[$key]['title'], ENT_NOQUOTES, 'UTF-8'));
-                
-                $json = json_decode( $list[$key]['intro'], true );
-                if( $json && $json['contents'] && file_exists('inc/template/'.$json['template']) ){
-                    
-                    $oldContents = kryn::$contents;
-                    kryn::$contents = $json['contents'];
-                    $list[$key]['intro'] = tFetch($json['template']);
-                    kryn::$contents = $oldContents;
-                }
-                
-                $list[$key]['intro'] = strip_tags(html_entity_decode($list[$key]['intro'], ENT_NOQUOTES, 'UTF-8'));
-            }
-        }
-        
-        
-        tAssign('items', $list);
-
-        tAssign('pConf', $pConf);
-        
-        @ob_end_clean();       
-        
-        tAssign('local',  substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 5));
-        header("Content-type: text/xml");      
-        print tFetch('publication/news/rss/'.$pConf['template'].'.tpl');
-        die();
+    public static function rssList( $pConf )
+    {
+        require_once( 'inc/modules/publication/publicationNews.class.php');
+        return publicationNews::rssList($pConf);
     }
 
 }

@@ -250,7 +250,7 @@
           "label": "Detailpage",
           "type": "page"
         },
-        "template": {
+        "rssTemplate": {
           "label": "Template",
           "type": "files",
           "withoutExtension": true,

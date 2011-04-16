@@ -1,40 +1,22 @@
 
-
 <a href="javascript: history.go(-1);">« [[back]]</a><br />
+
+{if $isNews}
 <div class="publicationNewsListDefaultItem">
     <h2>{$news.title}</h2>
     <div class="publicationNewsListDefaultItemIntro">
-        {if $news.introImage ne ""}
-            <img src="{$news.introImage}" class="publicationNewsListDefaultItemIntroImage" align="left" />
-        {/if}
+        {if $news.introImage ne ""}<img src="{$news.introImage}" class="publicationNewsListDefaultItemIntroImage" align="left" />{/if}
         {$news.intro}
         <div style="clear: both;"></div>
     <br />
     {$news.content}
     </div>
     
-            
     <div class="publicationNewsListDefaultItemBottom">
-        {if $news.deactivatecomments ne 1}
-            {$news.commentscount+0} [[comments]],
-        {/if}
-        {$news.categorytitle} - <span class="publicationNewsListDefaultItemBottomDate">{$news.releasedate|date_format:"%d.%m.%Y %H:%M"}</span>
-        
-        
+        {if $news.deactivatecomments ne 1}{$news.commentscount+0} [[comments]],{/if}
+        {$news.categoryTitle} - <span class="publicationNewsListDefaultItemBottomDate">{$news.releasedate|date_format:"%d.%m.%Y %H:%M"}</span>
     </div>
-    
 </div>
-
-
-
-
-
-
-
-
-
-
-
 
 {if $pConf.allowComments eq 1 && $news.deactivateComments ne 1}
 <div class="publication-news-detail-comments">
@@ -55,7 +37,6 @@
 
     {$smarty.capture.publicationCommentNavi}
 
-    
     <div class="publication-news-detail-comments-items">
     {foreach from=$comments item=comment name="comments"}
         <div class="publication-news-detail-comments-item publication-news-detail-comments-item-{$smarty.foreach.comments.index%2}">
@@ -67,7 +48,6 @@
         </div>
     {/foreach}
     </div>
-    
     
     {$smarty.capture.publicationCommentNavi}
 
@@ -113,4 +93,7 @@
     </div>
     </form>
 </div>
+{/if}
+{else}
+    [[Invalid news item provided.]]
 {/if}
