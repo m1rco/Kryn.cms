@@ -1099,7 +1099,7 @@ class pages {
             $existRow = dbExfetch("SELECT rsn FROM %pfx%system_urlalias WHERE to_page_rsn=".$page." AND url = '".$oldRealUrl."'", 1);
          
             if( $existRow['rsn']+0 == 0 )
-                dbInsert('system_urlalias', array( 'domain_rsn' => $page['domain_rsn'], 'url' => $oldRealUrl, 'to_page_rsn' => $rsn));
+                dbInsert('system_urlalias', array( 'domain_rsn' => $oldPage['domain_rsn'], 'url' => $oldRealUrl, 'to_page_rsn' => $rsn));
         }
     
         dbUpdate('system_pages', array('rsn' => $rsn), $updateArray);
