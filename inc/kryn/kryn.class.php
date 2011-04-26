@@ -811,8 +811,20 @@ class kryn extends baseModule {
             
             if( kryn::$domain['master'] != 1 )
                 $pUrl = kryn::$domain['lang'].'/'.$pUrl;
-        
-            $pUrl = 'http://'.kryn::$domain['domain'].kryn::$domain['path'].$pUrl;
+        	
+            $domain = kryn::$domain['domain'];
+            $path = kryn::$domain['path'];
+            
+            if(substr($domain, 0, -1) != '/')
+                $domain .= '/';
+            if($path != '' && substr($path, 0, 1) == '/')
+                $path = substr($path, 1);
+            if($path != '' && substr($path, 0, -1) == '/')
+                $path .= '/';
+            if($pUrl != '' && substr($path, 0, 1) == '/')
+                $pUrl = substr($pUrl, 1);
+            
+            $pUrl = 'http://'.$domain.$path.$pUrl;
         }
         
         
