@@ -23,7 +23,6 @@ class filemanager {
         kryn::addJs( 'admin/fuploader.js' );
         kryn::addCss( 'admin/filemanager.css' );
 */
-
         switch( getArgv(3) ) {
         case 'loadFolder':
             return filemanager::loadFolder( getArgv('path') );
@@ -77,7 +76,51 @@ class filemanager {
             return json( filemanager::search( getArgv('q'), getArgv('path') ) );
         case 'setInternalAcl':
             return json( filemanager::setInternalAcl( getArgv('path'), getArgv('rules') ) );
+        case 'diffFiles':
+            filemanager::diffFiles(getArgv('from'), getArgv('to'));
         }
+    }
+    
+    public static function diffFiles($pFrom, $pTo)
+    {
+        require_once('inc/modules/admin/FineDiff.class.php');
+        
+        $textFrom = filemanager::readFile($pFrom);
+        $textTo = filemanager::readFile($pTo);
+        
+		$textFrom = str_replace("\r\n", "\n", $textFrom);
+		$textTo = str_replace("\r\n", "\n", $textTo);
+		
+        $diff = FineDiff::getDiffOpcodes($textFrom, $textTo);
+		
+        //$htmlOutput = $diff->renderDiffToHTML();
+        
+        // Fix newlines and spaces
+        //$htmlOutput = nl2br($htmlOutput);
+        //$htmlOutput = str_replace(" ", "&nbsp;", $htmlOutput);
+        
+        json($diff);
+    }
+    
+    private static function readFile($pPath)
+    {
+        $path = str_replace("..", "", $pPath);
+        
+        // Template file
+        if( file_exists("inc/template/$path") )
+        {
+            $access = acl::checkAccess(3, '/'.$path, 'read', true);
+            if(!$access)
+                return 'no-access';
+            // On access return file contents
+            return kryn::fileRead("inc/template/$path");
+        }
+        // Normal file
+        else if(file_exists($path))
+            return kryn::fileRead($path);
+        
+        // File does not exist
+        return '';
     }
     
     public static function renameVersion( $pFrom, $pTo ){
@@ -624,19 +667,7 @@ $pAccess from all
     }
 
     public static function getFile( $pPath ){
-        $path = str_replace( "..", "", $pPath );
-        
-        if( file_exists("inc/template/$path") ){
-            
-            $access = acl::checkAccess( 3, '/'.$path, 'read', true );
-            if( !$access ) json('no-access');
-            
-           json( kryn::fileRead("inc/template/$path"));
-        } else if( file_exists($path ) ){
-           json( kryn::fileRead($path) );
-        }
-        
-        json( "" );
+        json( filemanager::readFile($pPath) );
     }
     
     public static function recover( $pRsn ){

@@ -314,6 +314,13 @@
           "defaultHeight": 420,
           "type": "custom"
         },
+        "diff": {
+          "title": "File diff",
+          "isLink": false,
+          "defaultWidth": 680,
+          "defaultHeight": 420,
+          "type": "custom"
+        },
         "properties": {
           "title": "Properties",
           "isLink": false,
