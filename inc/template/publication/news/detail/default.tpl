@@ -1,5 +1,5 @@
 
-<a href="javascript: history.go(-1);">« [[back]]</a><br />
+<a href="javascript: history.go(-1);">&laquo; [[back]]</a><br />
 
 {if $isNews}
 <div class="publicationNewsListDefaultItem">
