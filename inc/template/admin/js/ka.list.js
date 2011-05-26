@@ -31,12 +31,16 @@ ka.list = new Class({
         var _this = this;
         this.lastRequest = new Request.JSON({url: _path+'admin/backend/window/loadClass/deleteItem/', noCache: true, onComplete:function( res ){
             _this.win.softReload();
+            _this._deleteSuccess();
         }}).post({ 
             module: this.win.module,
             code: this.win.code,
             item: pItem.values
         });
     },
+    
+    _deleteSuccess: function()
+    { },
 
     click: function( pColumn ){
         pItem = this.columns[pColumn];
@@ -417,7 +421,8 @@ ka.list = new Class({
                 this.loader.show();
                 new Request.JSON({url: _path+'admin/backend/window/loadClass/removeSelected/', noCache: 1, onComplete: function(res){
                     this.loader.hide();
-                    this.loadPage( this.currentPage ); 
+                    this.loadPage( this.currentPage );
+                    this._deleteSuccess();
                 }.bind(this)}).post({
                     module: this.win.module,
                     code: this.win.code, 
