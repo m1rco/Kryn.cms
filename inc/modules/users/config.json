@@ -208,7 +208,7 @@
         }
       }
     ],
-    "registration": [
+    "pluginRegistration": [
       "Registration (In Development)",
       {
         "template": {

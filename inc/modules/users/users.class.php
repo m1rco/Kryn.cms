@@ -637,7 +637,22 @@ class users extends baseModule{
     
     }
     
-    
+    public static function pluginRegistration( $pConf )
+    {
+        $template = $pConf['template'];
+        
+        $required = array();
+        foreach($pConf['required'] as $req)
+            $required[$req] = true;
+        tAssign('required', $required);
+        
+        tAssign('debug', print_r($required, true));
+        
+        tAssign('pConf', $pConf);
+        kryn::addCss("users/css/registration/$template.css");
+        kryn::addJs("users/js/registration/$template.js");
+        return tFetch("users/registration/$template.tpl");
+    }
     
     
 }
