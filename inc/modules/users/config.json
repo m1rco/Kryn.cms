@@ -8,7 +8,7 @@
     "en": "Create, edit users and groups. Manage rights(ACLs) and let users communicates via the build-in messaging system."
   },
   "system": true,
-  "version": "0.9.0",
+  "version": "0.10.0",
   "owner": "1",
   "category": "8",
   "community": "1",
@@ -218,8 +218,8 @@
           "directory": "inc\/template\/users\/registration\/"
         },
         "category_rsn": {
-          "label": "Category",
-          "desc": "Which categories can login ?",
+          "label": "Group",
+          "desc": "Which group should the new users be added to?",
           "type": "select",
           "sql": "SELECT * FROM %pfx%system_groups",
           "table_label": "name",
@@ -229,32 +229,106 @@
           "label": "Thanks page",
           "type": "page"
         },
-        "withDoubleOptIn": {
-          "label": "With double-opt-in?",
-          "desc": "Enable douple-opt-in to verify the email with a activation-email of the registration.",
-          "type": "checkbox",
+        "activation": {
+          "label": "Activation",
+          "desc": "How should the account be activated?",
+          "type": "select",
+          "tableItems": [
+            {
+              "name": "Immediately",
+              "key": "now"
+            },
+            {
+              "name": "By administrator",
+              "key": "admin"
+            },
+            {
+              "name": "Activation email",
+              "key": "email"
+            },
+            {
+              "name": "Activation email and administrator",
+              "key": "emailadmin"
+            }
+          ],
+          "table_label": "name",
+          "table_id": "key",
           "depends": {
-            "emailsubject": {
-              "needValue": "1",
+            "email_subject": {
+              "needValue": "email",
               "label": "Email subject"
             },
-            "emailfrom": {
-              "needValue": "1",
+            "email_from": {
+              "needValue": "email",
               "label": "Email from"
             },
-            "activationnow": {
-              "label": "Activate the account immediately?",
-              "desc": "If disabled, the account have to activate manually in the administration",
-              "type": "checkbox"
+            "email_template": {
+              "needValue": "email",
+              "label": "Email template",
+              "type": "files",
+              "withoutExtension": true,
+              "directory": "inc\/template\/users\/activateemail\/"
+            },
+            
+            "emailadmin_subject": {
+              "needValue": "emailadmin",
+              "label": "Email subject"
+            },
+            "emailadmin_from": {
+              "needValue": "emailadmin",
+              "label": "Email from"
+            },
+            "emailadmin_template": {
+              "needValue": "emailadmin",
+              "label": "Email template",
+              "type": "files",
+              "withoutExtension": true,
+              "directory": "inc\/template\/users\/activateemail\/"
             }
           }
         },
-        "activationEmail": {
+        "required": {
+          "label": "Required fields",
+          "desc": "Select the fields you want to set as required for registration. Username, email and password are required by default.",
+          "type": "select",
+          "tableItems": [
+            { "name": "First name", "key": "firstname" },
+            { "name": "Last name",  "key": "lastname" },
+            { "name": "Street",     "key": "street" },
+            { "name": "City",       "key": "city" },
+            { "name": "Zipcode",    "key": "zipcode" },
+            { "name": "Country",    "key": "country" },
+            { "name": "Phone",      "key": "phone" },
+            { "name": "Fax",        "key": "fax" },
+            { "name": "Company",    "key": "company" }
+          ],
+          "table_label": "name",
+          "table_id": "key",
+          "multiple": true
+        },
+        "notificationemail": {
           "label": "Email notification",
-          "desc": "Sends a email if an account was created",
+          "desc": "Send an email to target address if an account was created",
+          "type": "checkbox",
           "depends": {
-            "activationEmailTarget": {
-              "label": "Email target"
+            "notifyemail_target": {
+              "needValue": "1",
+              "label": "Notify email target address"
+            },
+            "notifyemail_subject": {
+              "needValue": "1",
+              "label": "Notify email subject"
+            },
+            "notifyemail_from": {
+              "needValue": "1",
+              "label": "Notify email from address"
+            },
+            "notifyemail_template": {
+              "needValue": "1",
+              "label": "Notify email template",
+              "type": "files",
+              "withoutExtension": true,
+              "directory": "inc\/template\/users\/notifyemail\/"
             }
           }
         }
