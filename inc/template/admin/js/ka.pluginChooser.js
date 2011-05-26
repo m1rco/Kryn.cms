@@ -55,18 +55,51 @@ ka.pluginChooser =  new Class({
         var tr = new Element('tr').inject( tbody );
         var td = new Element('td', {
             html: _('Extension:'),
-            width: 140,
+            width: 100,
             style: 'font-size: 12px; font-weight: bold; padding: 0px 4px;'
         }).inject( tr );
         var td = new Element('td', {
-            width: 160
+            width: 200
         }).inject( tr );
-        var selectModules = new Element('select', {style: 'width: 130px;', size:1, name: 'dummy'}).inject( td );
+        var selectModules = new Element('select', {style: 'width: 190px;', size:1, name: 'dummy'}).inject( td );
         
         this.pluginDescription = new Element('td', {
             rowspan: 2,
             html: _('Please choose a extension and a plugin.')
         }).inject( tr );
+        
+        this.windowEnlarger = new Element('td', {
+            width: '25px',
+            rowspan: 2,
+            valign: 'top',
+        }).inject(tr);
+        
+        this.btnLarger = new Element('img', {
+            title: 'Enlarge window',
+            src: 'inc/template/admin/images/icons/tree_up.png',
+            style: 'width: 11px; height: 11px; border: 0; cursor: pointer; float: right;',
+        })
+        .addEvent('click', function() {
+            this.btnLarger.hide();
+            this.btnSmaller.show();
+            this.target.setStyle('height', '90%');
+        }.bind(this))
+        .inject(this.windowEnlarger);
+        
+        this.btnSmaller = new Element('img', {
+            title: 'Shrink window',
+            src: 'inc/template/admin/images/icons/tree_minus.png',
+            style: 'width: 11px; height: 11px; border: 0; cursor: pointer; float: right;'
+        })
+        .addEvent('click', function() {
+            this.btnSmaller.hide();
+            this.btnLarger.show();
+            this.target.setStyle('height', '221px');
+        }.bind(this))
+        .inject(this.windowEnlarger);
+        
+        // Hide smaller button as window is already at small size
+        this.btnSmaller.hide();
 
         
         var tr = new Element('tr').inject( tbody );
@@ -115,7 +148,7 @@ ka.pluginChooser =  new Class({
 
                 //new Element( 'span', { html: '<div class="title">'+_('Plugin')+'</div>', 'class': 'ka-field-title' } ).inject( pluginsDiv ); 
                 //var pVal = new Element( 'div', { 'class': 'ka-field-field' } ).inject( pluginsDiv );
-                var pSelect = new Element( 'select', {style: 'width: 130px;', size:1, name: 'dummy'} );
+                var pSelect = new Element( 'select', {style: 'width: 190px;', size:1, name: 'dummy'} );
 
                 var pSelectChange = function(){
                     
