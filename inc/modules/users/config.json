@@ -139,7 +139,7 @@
         },
         "groups": {
           "title": "Groups",
-          "type": "list",
+          "type": "custom",
           "class": "usersAdminGroupList",
           "childs": {
             "edit": {
