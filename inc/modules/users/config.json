@@ -152,7 +152,7 @@
             },
             "add": {
               "title": "Group add",
-              "type": "add",
+              "type": "custom",
               "class": "usersAdminGroupAdd",
               "isLink": false,
               "fixedWidth": 375,
