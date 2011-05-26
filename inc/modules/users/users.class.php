@@ -639,16 +639,34 @@ class users extends baseModule{
     
     public static function pluginRegistration( $pConf )
     {
+        // Get template name from config
         $template = $pConf['template'];
         
+        // Build list of required and hidden fields from config
         $required = array();
         foreach($pConf['required'] as $req)
             $required[$req] = true;
+        
+        $hidden = array();
+        foreach($pConf['hidden'] as $hide)
+        {
+            $hidden[$hide] = true;
+            if(isset($required[$hide]))
+                unset($required[$hide]);
+        }
+        
+        // Assign required and hidden fields to template
         tAssign('required', $required);
+        tAssign('hidden', $hidden);
         
-        tAssign('debug', print_r($required, true));
         
+        
+        tAssign('debug', print_r($pConf, true));
+        
+        // Assign config to template 
         tAssign('pConf', $pConf);
+        
+        // Load template
         kryn::addCss("users/css/registration/$template.css");
         kryn::addJs("users/js/registration/$template.js");
         return tFetch("users/registration/$template.tpl");

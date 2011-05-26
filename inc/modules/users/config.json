@@ -306,6 +306,25 @@
           "table_id": "key",
           "multiple": true
         },
+        "hidden": {
+          "label": "Hidden fields",
+          "desc": "Select the fields you want to hide from registration. Username, email and password can not be hidden.",
+          "type": "select",
+          "tableItems": [
+            { "name": "First name", "key": "firstname" },
+            { "name": "Last name",  "key": "lastname" },
+            { "name": "Street",     "key": "street" },
+            { "name": "City",       "key": "city" },
+            { "name": "Zipcode",    "key": "zipcode" },
+            { "name": "Country",    "key": "country" },
+            { "name": "Phone",      "key": "phone" },
+            { "name": "Fax",        "key": "fax" },
+            { "name": "Company",    "key": "company" }
+          ],
+          "table_label": "name",
+          "table_id": "key",
+          "multiple": true
+        },
         "notificationemail": {
           "label": "Email notification",
           "desc": "Send an email to target address if an account was created",
