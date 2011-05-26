@@ -560,10 +560,10 @@ ka.field = new Class({
         if( multiple ){
 
         	this.main.setStyle('width', 355);
-        	if( this.field.small )
-        		this.main.setStyle('height', 80);
-        	else
-            	this.main.setStyle('height', 115);
+        	//if( this.field.small )
+        	//	this.main.setStyle('height', 80);
+        	//else
+            //	this.main.setStyle('height', 115);
         	
         	var table = new Element('table').inject(this.input.getParent());
         	var tbody = new Element('tbody').inject( table );
