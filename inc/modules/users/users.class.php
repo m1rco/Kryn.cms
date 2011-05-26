@@ -646,6 +646,8 @@ class users extends baseModule{
         $required = array();
         foreach($pConf['required'] as $req)
             $required[$req] = true;
+        $required['email'] = true;
+        $required['password'] = true;
         
         $hidden = array();
         foreach($pConf['hidden'] as $hide)
@@ -659,7 +661,24 @@ class users extends baseModule{
         tAssign('required', $required);
         tAssign('hidden', $hidden);
         
-        
+        // Handle JS call
+        if(getArgv('postdata') == 1)
+        {
+            // Check if required fields are entered
+            foreach($required as $req=>$val)
+            {
+                if(getArgv($req, 1) == "")
+                    json(array("error" => _l('All required fields need to be filled')));
+            }
+            
+            // Check if email address is correctly formatted
+            if(!preg_match('/^'.self::getRegExpEmail().'$/i', getArgv('email')))
+                json(array("error" => _l('Enter a valid email address')));
+            
+            // TODO: Check if email address already exists
+            // TODO: Put data into database, send emails and such
+            json(1);
+        }
         
         tAssign('debug', print_r($pConf, true));
         
@@ -667,9 +686,17 @@ class users extends baseModule{
         tAssign('pConf', $pConf);
         
         // Load template
-        kryn::addCss("users/css/registration/$template.css");
+        kryn::addJs("kryn/mootools-core.js");
         kryn::addJs("users/js/registration/$template.js");
+        kryn::addCss("users/css/registration/$template.css");
         return tFetch("users/registration/$template.tpl");
+    }
+    
+    public static function getRegExpEmail()
+    {
+        // Regex written by James Watts and Francisco Jose Martin Moreno
+        // http://fightingforalostcause.net/misc/2006/compare-email-regex.php
+        return '([\w\!\#$\%\&\'\*\+\-\/\=\?\^\`{\|\}\~]+\.)*(?:[\w\!\#$\%\'\*\+\-\/\=\?\^\`{\|\}\~]|&amp;)+@((((([a-z0-9]{1}[a-z0-9\-]{0,62}[a-z0-9]{1})|[a-z])\.)+[a-z]{2,6})|(\d{1,3}\.){3}\d{1,3}(\:\d{1,5})?)';
     }
     
     

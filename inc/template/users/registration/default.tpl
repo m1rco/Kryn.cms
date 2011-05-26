@@ -1,25 +1,17 @@
-<form action="" method="post">
-    <dl id="registrationform">
-    {if $errors}
-        <dt id="errorHead">[[Registration failed]]</dt>
-        <dd id="errorBody">
-            <ul>
-            {foreach from=$errors item=error}
-                <li>{$error}</li>
-            {/foreach}
-            </ul>
-        </dd>
-    {/if}
-        <dd>Fields in <strong>bold</strong> are required for registration</dd>
+<div id="registrationform">
+    <dl>
+        <dt>Fields in <strong>bold</strong> are required for registration</dt>
         
-        <dt class="req">[[Username]]</dt>
-        <dd><input type="text" name="username" id="reg_username" /></dd>
+        <dt class="req">[[Email address]]</dt>
+        <dd><input type="text" name="email" id="reg_email" />
         
         <dt class="req">[[Password]]</dt>
         <dd><input type="password" name="password" id="reg_password" /></dd>
         
-        <dt class="req">[[Email address]]</dt>
-        <dd><input type="email" name="email" id="reg_email" />
+    {if not $hidden.username}
+        <dt{if $required.username} class="req"{/if}>[[Username]]</dt>
+        <dd><input type="text" name="username" id="reg_username" /></dd>
+    {/if}
         
     {if not $hidden.firstname}
         <dt{if $required.firstname} class="req"{/if}>[[First name]]</dt>
@@ -66,6 +58,9 @@
         <dd><input type="text" name="company" id="reg_company" /></dd>
     {/if}
     
+        <dd><input type="button" id="register" value="[[Register]]" /> <img id="loader" src="inc/template/admin/images/ka-tooltip-loading.gif" /></dd>
     </dl>
-</form>
-<pre>{$debug}</pre>
+    <div id="error"></div>
+    <pre>{$debug}</pre>
+</div>
+<div style="clear: both;"></div>

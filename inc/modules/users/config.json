@@ -289,9 +289,10 @@
         },
         "required": {
           "label": "Required fields",
-          "desc": "Select the fields you want to set as required for registration. Username, email and password are required by default.",
+          "desc": "Select the fields you want to set as required for registration. Email address and password are required by default.",
           "type": "select",
           "tableItems": [
+            { "name": "Username",   "key": "username" },
             { "name": "First name", "key": "firstname" },
             { "name": "Last name",  "key": "lastname" },
             { "name": "Street",     "key": "street" },
@@ -308,9 +309,10 @@
         },
         "hidden": {
           "label": "Hidden fields",
-          "desc": "Select the fields you want to hide from registration. Username, email and password can not be hidden.",
+          "desc": "Select the fields you want to hide from registration. Email address and password can not be hidden.",
           "type": "select",
           "tableItems": [
+            { "name": "Username",   "key": "username" },
             { "name": "First name", "key": "firstname" },
             { "name": "Last name",  "key": "lastname" },
             { "name": "Street",     "key": "street" },
