@@ -426,10 +426,16 @@ ka.windowEdit = new Class({
                     _this.saveNoClose.stopTip(_('Done'));
                 }
                 
+                // Before close, perform saveSuccess
+                _this._saveSuccess();
+                
                 if( pClose )
                     _this.win.close();
             }}).post(req);
         }
-    }
+    },
+    
+    _saveSuccess: function()
+    { }
 
 });

@@ -5,6 +5,10 @@ users_users_groups_add = new Class({
 	{
         this.windowAdd = true;
         this.parent(pWin);
-        logger("bla!");
+    },
+    
+    _saveSuccess: function()
+    {
+        ka.loadSettings();
     }
 });
