@@ -144,7 +144,7 @@
           "childs": {
             "edit": {
               "title": "Group edit",
-              "type": "edit",
+              "type": "custom",
               "class": "usersAdminGroupEdit",
               "isLink": false,
               "fixedWidth": 475,
