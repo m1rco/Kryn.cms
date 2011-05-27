@@ -675,7 +675,11 @@ class users extends baseModule{
             if(!preg_match('/^'.self::getRegExpEmail().'$/i', getArgv('email')))
                 json(array("error" => _l('Enter a valid email address')));
             
-            // TODO: Check if email address already exists
+            if(self::emailAlreadyExists(getArgv('email')))
+                json(array("error" => _l('An account with this email address already exists')));
+            
+            // TODO: Create insert
+            
             // TODO: Put data into database, send emails and such
             json(1);
         }
@@ -697,6 +701,11 @@ class users extends baseModule{
         // Regex written by James Watts and Francisco Jose Martin Moreno
         // http://fightingforalostcause.net/misc/2006/compare-email-regex.php
         return '([\w\!\#$\%\&\'\*\+\-\/\=\?\^\`{\|\}\~]+\.)*(?:[\w\!\#$\%\'\*\+\-\/\=\?\^\`{\|\}\~]|&amp;)+@((((([a-z0-9]{1}[a-z0-9\-]{0,62}[a-z0-9]{1})|[a-z])\.)+[a-z]{2,6})|(\d{1,3}\.){3}\d{1,3}(\:\d{1,5})?)';
+    }
+    
+    public static function emailAlreadyExists($email)
+    {
+        return dbExfetch("SELECT rsn FROM %pfx%system_user WHERE email='$email'", 1) != null;
     }
     
     
