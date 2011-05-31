@@ -1388,6 +1388,10 @@ var admin_pages = new Class({
                 this.domainTrees.get(this.currentDomain.rsn ).reload();
             }
             this.currentDomain = req;
+            ka.settings.domains.each(function(d, index) {
+                if(d.rsn == req.rsn)
+                    ka.settings.domains[index] = req;
+            });
         }.bind(this)}).post(req);
     },
 
