@@ -679,6 +679,20 @@ class users extends baseModule{
                 json(array("error" => _l('An account with this email address already exists')));
             
             // TODO: Create insert
+            $values = array(
+                "email" => getArgv('reg_email'),
+                "password" => md5(getArgv('reg_password')),
+                "username" => getArgv('reg_username', 1),
+                "firstname" => getArgv('reg_firstname', 1),
+                "lastname" => getArgv('reg_lastname', 1),
+                "street" => getArgv('reg_street', 1),
+                "city" => getArgv('reg_city', 1),
+                "zipcode" => getArgv('reg_zipcode', 1),
+                "country" => getArgv('reg_country', 1),
+                "phone" => getArgv('reg_phone', 1),
+                "fax" => getArgv('reg_fax', 1),
+                "company" => getArgv('reg_company', 1)
+            );
             
             // TODO: Put data into database, send emails and such
             json(1);
