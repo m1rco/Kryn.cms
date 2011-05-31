@@ -678,7 +678,17 @@ class users extends baseModule{
             if(self::emailAlreadyExists(getArgv('email')))
                 json(array("error" => _l('An account with this email address already exists')));
             
-            // TODO: Create insert
+            // Is account activated from the start?
+            $active = 0;
+            if($pConf['activation'] == 'now')
+                $active = 1;
+            
+            // If activation is done by email, generate key
+            $actKey = "";
+            if($pConf['activation'] == 'email' || $pConf['activation'] == 'emailadmin')
+                $actKey = self::generateActKey();
+            
+            // Create array of values to be inserted into database
             $values = array(
                 "email" => getArgv('reg_email'),
                 "password" => md5(getArgv('reg_password')),
@@ -691,10 +701,19 @@ class users extends baseModule{
                 "country" => getArgv('reg_country', 1),
                 "phone" => getArgv('reg_phone', 1),
                 "fax" => getArgv('reg_fax', 1),
-                "company" => getArgv('reg_company', 1)
+                "company" => getArgv('reg_company', 1),
+                
+                "activate" => $active,
+                "activationkey" => $authKey
             );
             
-            // TODO: Put data into database, send emails and such
+            // Insert and retrieve created rsn
+            $ursn = dbInsert('system_user', $values);
+            
+            // TODO: Send activation email when required [use email and act key]
+            
+            
+            
             json(1);
         }
         
@@ -720,6 +739,27 @@ class users extends baseModule{
     public static function emailAlreadyExists($email)
     {
         return dbExfetch("SELECT rsn FROM %pfx%system_user WHERE email='$email'", 1) != null;
+    }
+    
+    private static function generateActKey()
+    {
+        $charSets = array();
+        $charSets[] = array('count' => 4, 'chars' => "abcdefghijklmnopqrstuvwxyz");
+        $charSets[] = array('count' => 4, 'chars' => "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+        $charSets[] = array('count' => 2, 'chars' => "0123456789");
+        // Don't use these for auth key, would mess up the url, could be used for temporary password
+        //$charSet[] = array('count' => 2, 'chars' => "!@#$+-*&?:"); 
+        
+        $temp = array();
+        foreach($charSets as $cs)
+        {
+            $strLen = strlen($cs['chars']) - 1;
+            for($i=0; $i<$cs['count']; $i++)
+                $temp[] = $cs['chars'][rand(0, $strLen)];
+        }
+        
+        shuffle($temp);
+        return implode("", $temp);
     }
     
     
