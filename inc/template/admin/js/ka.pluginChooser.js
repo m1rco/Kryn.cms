@@ -71,7 +71,7 @@ ka.pluginChooser =  new Class({
         this.windowEnlarger = new Element('td', {
             width: '25px',
             rowspan: 2,
-            valign: 'top',
+            valign: 'top'
         }).inject(tr);
         
         this.btnLarger = new Element('img', {
