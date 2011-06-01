@@ -704,7 +704,7 @@ class users extends baseModule{
                 "company" => getArgv('company', 1),
                 
                 "activate" => $active,
-                "activationkey" => $authKey,
+                "activationkey" => $actKey,
                 "created" => time()
             );
             
