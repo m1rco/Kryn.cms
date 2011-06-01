@@ -707,13 +707,41 @@ class users extends baseModule{
                 "activationkey" => $authKey
             );
             
-            // Insert and retrieve created rsn
-            $ursn = dbInsert('system_user', $values);
+            // Insert into database
+            dbInsert('system_user', $values);
             
-            // TODO: Send activation email when required [use email and act key]
+            // Send activation email when required [use email and act key]
+            if($actKey != "")
+            { // Activation key set, thus send email
+                $isSelfActivation = $pConf['activation'] == 'email';
+                $eSubject = $isSelfActivation ? $pConf['email_subject'] : $pConf['emailadmin_subject'];
+                $eFrom = $isSelfActivation ? $pConf['email_from'] : $pConf['emailadmin_from'];
+                $eTemplate = $isSelfActivation ? $pConf['email_template'] : $pConf['emailadmin_template'];
+                $sendTo = $values['email'];
+                
+                tAssign('values', $values);
+                $body = tFetch("users/activateemail/$eTemplate.tpl");
+                tAssign('values', null);
+                
+                mail($sendTo, '=?UTF-8?B?'.base64_encode($eSubject).'?=', $body, 'From: '. $eFrom."\r\n".'Content-Type: text/html; charset=utf-8');
+            }
             
+            // Send notification email when required
+            if($pConf['notificationemail'] == 1)
+            {
+                $sendTo = $pConf['notifyemail_target'];
+                $eSubject = $pConf['notifyemail_subject'];
+                $eFrom = $pConf['notifyemail_from'];
+                $eTemplate = $pConf['notifyemail_template'];
+                
+                tAssign('values', $values);
+                $body = tFetch("users/activateemail/$eTemplate.tpl");
+                tAssign('values', null);
+                
+                mail($sendTo, '=?UTF-8?B?'.base64_encode($eSubject).'?=', $body, 'From: '. $eFrom."\r\n".'Content-Type: text/html; charset=utf-8');
+            }
             
-            
+            // Registration completed
             json(1);
         }
         
