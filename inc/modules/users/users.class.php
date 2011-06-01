@@ -690,21 +690,22 @@ class users extends baseModule{
             
             // Create array of values to be inserted into database
             $values = array(
-                "email" => getArgv('reg_email'),
-                "password" => md5(getArgv('reg_password')),
-                "username" => getArgv('reg_username', 1),
-                "firstname" => getArgv('reg_firstname', 1),
-                "lastname" => getArgv('reg_lastname', 1),
-                "street" => getArgv('reg_street', 1),
-                "city" => getArgv('reg_city', 1),
-                "zipcode" => getArgv('reg_zipcode', 1),
-                "country" => getArgv('reg_country', 1),
-                "phone" => getArgv('reg_phone', 1),
-                "fax" => getArgv('reg_fax', 1),
-                "company" => getArgv('reg_company', 1),
+                "email" => getArgv('email'),
+                "passwd" => md5(getArgv('password')),
+                "username" => getArgv('username', 1),
+                "first_name" => getArgv('firstname', 1),
+                "last_name" => getArgv('lastname', 1),
+                "street" => getArgv('street', 1),
+                "city" => getArgv('city', 1),
+                "zip" => getArgv('zipcode', 1),
+                "country" => getArgv('country', 1),
+                "phone" => getArgv('phone', 1),
+                "fax" => getArgv('fax', 1),
+                "company" => getArgv('company', 1),
                 
                 "activate" => $active,
-                "activationkey" => $authKey
+                "activationkey" => $authKey,
+                "created" => time()
             );
             
             // Insert into database
@@ -742,10 +743,8 @@ class users extends baseModule{
             }
             
             // Registration completed
-            json(1);
+            json(array("href" => kryn::pageUrl($pConf['targetpage'])));
         }
-        
-        tAssign('debug', print_r($pConf, true));
         
         // Assign config to template 
         tAssign('pConf', $pConf);

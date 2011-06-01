@@ -35,7 +35,7 @@ var registerClicked = function() {
             if(res.error)
                 showError(res.error);
             else
-            	alert(res);
+                document.location.href = res.href;
         }
     }).post({
         postdata: 1,

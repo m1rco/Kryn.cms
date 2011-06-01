@@ -61,6 +61,5 @@
         <dd><input type="button" id="register" value="[[Register]]" /> <img id="loader" src="inc/template/admin/images/ka-tooltip-loading.gif" /></dd>
     </dl>
     <div id="error"></div>
-    <pre>{$debug}</pre>
 </div>
 <div style="clear: both;"></div>
