@@ -339,10 +339,10 @@ class database {
                 }
     
                 //check if we need to force utf8 for mysql
-                if( ($this->type == 'mysql' || $this->type == 'mysqli') )
+                if( $pForceUtf8 && ($this->type == 'mysql' || $this->type == 'mysqli') )
                 	$this->pdo->query("SET NAMES 'utf8'");
                 
-                if( $pForceUtf8 && ($this->type == 'mysql' || $this->type == 'mysqli') )
+                if( $this->type == 'mysql' || $this->type == 'mysqli' )
                     $this->pdo->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true);
                 
                 return $this->pdo;
